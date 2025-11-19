@@ -1,0 +1,18 @@
+@page "/events"
+@using EventEaseApp.Models
+
+<h2>Upcoming Events</h2>
+
+@foreach (var ev in events)
+{
+    <EventCard Event="ev" />
+}
+
+@code {
+    private List<EventModel> events = new()
+    {
+        new EventModel { Id = 1, Name = "Corporate Gala", Date = DateTime.Now.AddDays(10), Location = "New York" },
+        new EventModel { Id = 2, Name = "Tech Conference", Date = DateTime.Now.AddDays(30), Location = "San Francisco" },
+        new EventModel { Id = 3, Name = "Wedding Expo", Date = DateTime.Now.AddDays(45), Location = "Chicago" }
+    };
+}

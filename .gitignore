@@ -1,0 +1,27 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.rsuser
+*.suo
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# NuGet packages
+packages/
+
+# Publish outputs
+publish/
+wwwroot/dist/
+
+# Generated files
+*.g.cs
+*.g.i.cs

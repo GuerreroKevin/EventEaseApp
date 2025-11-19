@@ -1,0 +1,39 @@
+@page "/eventdetails/{id:int}"
+@using EventEaseApp.Models
+@inject NavigationManager NavManager
+
+<h2>Event Details</h2>
+
+@if (eventDetail != null)
+{
+    <p><strong>Name:</strong> @eventDetail.Name</p>
+    <p><strong>Date:</strong> @eventDetail.Date.ToString("MMMM dd, yyyy")</p>
+    <p><strong>Location:</strong> @eventDetail.Location</p>
+
+    <a class="btn btn-success" href="/register/@eventDetail.Id">Register</a>
+}
+else
+{
+    <p>Loading event...</p>
+}
+
+<a class="btn btn-secondary" href="/events">Go back</a>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    private EventModel eventDetail;
+
+    protected override void OnInitialized()
+    {
+        // Mock lookup
+        var mockEvents = new List<EventModel>
+        {
+            new EventModel { Id = 1, Name = "Corporate Gala", Date = DateTime.Now.AddDays(10), Location = "New York" },
+            new EventModel { Id = 2, Name = "Tech Conference", Date = DateTime.Now.AddDays(30), Location = "San Francisco" },
+            new EventModel { Id = 3, Name = "Wedding Expo", Date = DateTime.Now.AddDays(45), Location = "Chicago" }
+        };
+
+        eventDetail = mockEvents.FirstOrDefault(e => e.Id == id);
+    }
+}

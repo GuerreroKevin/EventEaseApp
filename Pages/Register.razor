@@ -1,0 +1,24 @@
+@page "/register/{id:int}"
+
+<h2>Register for Event</h2>
+<p>You are registering for event ID: @id</p>
+
+<form>
+    <div class="mb-3">
+        <label>Name:</label>
+        <input class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Email:</label>
+        <input class="form-control" />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+<a class="btn btn-secondary" href="/eventdetails/@id">Go back</a>
+
+<a class="btn btn-secondary" href="/events">To Events</a>
+
+@code {
+    [Parameter] public int id { get; set; }
+}
