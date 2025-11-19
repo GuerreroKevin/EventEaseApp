@@ -1,5 +1,8 @@
 @page "/register/{id:int}"
 @using EventEaseApp.Models
+@inject Services.UserSessionService SessionService
+@inject Services.AttendanceService AttendanceService
+@inject NavigationManager NavManager
 
 <h2>Register for Event</h2>
 <p>You are registering for event ID: @id</p>
@@ -20,29 +23,27 @@
         <ValidationMessage For="@(() => registration.Email)" />
     </div>
 
-    <div class="mb-3">
-        <label>Phone:</label>
-        <InputText class="form-control" @bind-Value="registration.Phone" />
-        <ValidationMessage For="@(() => registration.Phone)" />
-    </div>
-
     <button class="btn btn-primary">Submit</button>
 </EditForm>
 
 @if (submitted)
 {
-    <p class="text-success">Registration successful! 🎉</p>
+    <p class="text-success">Registration successful! Redirecting back to event details...</p>
 }
 
 @code {
     [Parameter] public int id { get; set; }
-
     private RegistrationModel registration = new();
     private bool submitted = false;
 
-    private void HandleValidSubmit()
+    private async void HandleValidSubmit()
     {
+        SessionService.RegisterUser(registration, id);
+        AttendanceService.MarkAttendance(id, registration.Name);
         submitted = true;
-        // Later: Save to database or API
+
+        // Redirect after 3 seconds
+        await Task.Delay(3000);
+        NavManager.NavigateTo($"/eventdetails/{id}");
     }
 }

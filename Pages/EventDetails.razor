@@ -3,27 +3,28 @@
 
 <h2>Event Details</h2>
 
-@if (eventDetail != null)
+@if (eventDetail == null)
+{
+    <p class="text-warning">Event not found. Please return to <a href="">Events</a>.</p>
+}
+else
 {
     <p><strong>Name:</strong> @eventDetail.Name</p>
     <p><strong>Date:</strong> @eventDetail.Date.ToString("MMMM dd, yyyy")</p>
     <p><strong>Location:</strong> @eventDetail.Location</p>
 
-    <div class="btn-group">
+    <div class="btn-group mt-3">
         <a class="btn btn-success" href="/register/@eventDetail.Id">Register</a>
-        <a class="btn btn-secondary" href="/events">Back to Events</a>
+        <a class="btn btn-info" href="/attendance/@eventDetail.Id">View Attendance</a>
+        <a class="btn btn-secondary" href="">Back to Events</a>
     </div>
-}
-else
-{
-    <p class="text-warning">Event not found. Please return to <a href="/events">Events</a>.</p>
 }
 
 
 @code {
     [Parameter] public int id { get; set; }
 
-    private EventModel eventDetail;
+    private EventModel? eventDetail;
 
     protected override void OnInitialized()
     {
