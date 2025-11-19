@@ -1,6 +1,5 @@
 @page "/eventdetails/{id:int}"
 @using EventEaseApp.Models
-@inject NavigationManager NavManager
 
 <h2>Event Details</h2>
 
@@ -10,14 +9,16 @@
     <p><strong>Date:</strong> @eventDetail.Date.ToString("MMMM dd, yyyy")</p>
     <p><strong>Location:</strong> @eventDetail.Location</p>
 
-    <a class="btn btn-success" href="/register/@eventDetail.Id">Register</a>
+    <div class="btn-group">
+        <a class="btn btn-success" href="/register/@eventDetail.Id">Register</a>
+        <a class="btn btn-secondary" href="/events">Back to Events</a>
+    </div>
 }
 else
 {
-    <p>Loading event...</p>
+    <p class="text-warning">Event not found. Please return to <a href="/events">Events</a>.</p>
 }
 
-<a class="btn btn-secondary" href="/events">Go back</a>
 
 @code {
     [Parameter] public int id { get; set; }
@@ -26,7 +27,6 @@ else
 
     protected override void OnInitialized()
     {
-        // Mock lookup
         var mockEvents = new List<EventModel>
         {
             new EventModel { Id = 1, Name = "Corporate Gala", Date = DateTime.Now.AddDays(10), Location = "New York" },

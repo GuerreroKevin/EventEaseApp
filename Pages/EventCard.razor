@@ -1,11 +1,23 @@
 @using EventEaseApp.Models
 
 <div class="card m-3 p-3 shadow-sm">
-    <h3>@Event.Name</h3>
-    <p><strong>Date:</strong> @Event.Date.ToString("MMMM dd, yyyy")</p>
-    <p><strong>Location:</strong> @Event.Location</p>
+    @if (!string.IsNullOrWhiteSpace(Event?.Name) 
+        && Event.Date != default 
+        && !string.IsNullOrWhiteSpace(Event?.Location))
+    {
+        <h3>@Event.Name</h3>
+        <p><strong>Date:</strong> @Event.Date.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Location:</strong> @Event.Location</p>
 
-    <a class="btn btn-primary" href="/eventdetails/@Event.Id">View Details</a>
+        <div class="btn-group">
+            <a class="btn btn-primary" href="/eventdetails/@Event.Id">View Details</a>
+            <a class="btn btn-success" href="/register/@Event.Id">Register</a>
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Invalid event data</p>
+    }
 </div>
 
 @code {

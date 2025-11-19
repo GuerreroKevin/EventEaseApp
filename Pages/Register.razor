@@ -1,24 +1,48 @@
 @page "/register/{id:int}"
+@using EventEaseApp.Models
 
 <h2>Register for Event</h2>
 <p>You are registering for event ID: @id</p>
 
-<form>
+<EditForm Model="registration" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
     <div class="mb-3">
         <label>Name:</label>
-        <input class="form-control" />
+        <InputText class="form-control" @bind-Value="registration.Name" />
+        <ValidationMessage For="@(() => registration.Name)" />
     </div>
+
     <div class="mb-3">
         <label>Email:</label>
-        <input class="form-control" />
+        <InputText class="form-control" @bind-Value="registration.Email" />
+        <ValidationMessage For="@(() => registration.Email)" />
     </div>
+
+    <div class="mb-3">
+        <label>Phone:</label>
+        <InputText class="form-control" @bind-Value="registration.Phone" />
+        <ValidationMessage For="@(() => registration.Phone)" />
+    </div>
+
     <button class="btn btn-primary">Submit</button>
-</form>
+</EditForm>
 
-<a class="btn btn-secondary" href="/eventdetails/@id">Go back</a>
-
-<a class="btn btn-secondary" href="/events">To Events</a>
+@if (submitted)
+{
+    <p class="text-success">Registration successful! 🎉</p>
+}
 
 @code {
     [Parameter] public int id { get; set; }
+
+    private RegistrationModel registration = new();
+    private bool submitted = false;
+
+    private void HandleValidSubmit()
+    {
+        submitted = true;
+        // Later: Save to database or API
+    }
 }
